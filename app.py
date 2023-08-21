@@ -1,7 +1,11 @@
 from flask import Flask, request, jsonify
 from rembg import remove
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app)  # This allows all origins, you can specify more options if needed
+
 
 @app.route('/remove_background', methods=['POST'])
 def remove_background():
