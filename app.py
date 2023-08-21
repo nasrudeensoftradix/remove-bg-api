@@ -1,9 +1,7 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from rembg import remove
 from flask_cors import CORS
 import os
-import base64
-
 
 
 
@@ -21,10 +19,10 @@ def remove_background():
         image_data = image_file.read()
 
         output_data = remove(image_data)
-         # Convert the processed image to base64
-        base64_output = base64.b64encode(output_data).decode("utf-8")
 
-        return jsonify({"result": output_data})
+ # Return the processed image data as bytes
+        # return jsonify({"result": output_data.decode("latin-1")})
+        return Response(response=output_data, status=200, content_type='image/png')
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
