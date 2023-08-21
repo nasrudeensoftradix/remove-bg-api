@@ -24,7 +24,7 @@ def remove_background():
          # Convert the processed image to base64
         base64_output = base64.b64encode(output_data).decode("utf-8")
 
-        return jsonify({"result": base64_output})
+        return jsonify({"result": output_data})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
