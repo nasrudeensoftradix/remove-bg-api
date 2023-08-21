@@ -1,34 +1,22 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, jsonify
 from rembg import remove
-from PIL import Image
-import io
 
 app = Flask(__name__)
 
-
-@app.route("/remove_background", methods=["POST"])
+@app.route('/remove_background', methods=['POST'])
 def remove_background():
     try:
-        # Get the uploaded image from the POST request
-        uploaded_file = request.files["image"]
+        if 'image' not in request.files:
+            return jsonify({"error": "No image uploaded"}), 400
 
-        if uploaded_file:
-            # Process the uploaded image using rembg
-            input_image = Image.open(uploaded_file)
-            output_image = remove(input_image)
+        image_file = request.files['image']
+        image_data = image_file.read()
 
-            # Save the output image to a BytesIO object
-            output_io = io.BytesIO()
-            output_image.save(output_io, format="PNG")
-            output_io.seek(0)
+        output_data = remove(image_data)
 
-            # Return the background-removed image as a response
-            return send_file(output_io, mimetype="image/png")
-        else:
-            return "No image uploaded.", 400
+        return jsonify({"result": output_data.decode("latin-1")})
     except Exception as e:
-        return str(e), 500
+        return jsonify({"error": str(e)}), 500
 
-
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run()

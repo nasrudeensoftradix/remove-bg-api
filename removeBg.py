@@ -4,7 +4,7 @@ from PIL import Image
 import logging
 
 # Store path of the image in the variable input_path
-input_path = "/home/softrdix/Downloads/cr_em13_09.jpg"
+input_path = "/home/softrdix/Downloads/Realistic-Male-Profile-Picture.webp"
 
 # Store path of the output image in the variable output_path
 output_path = "/home/softrdix/Downloads/gfgoutput.png"
